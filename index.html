@@ -134,7 +134,8 @@
     function generate(){
       const n = randomHundred();
       valueEl.textContent = fmtNumber(n);
-      const entry = { id: crypto.randomUUID(), name: currentName(), value: n, timeISO: new Date().toISOString() };
+      const uuid = (crypto.randomUUID ? crypto.randomUUID() : ('id-' + Math.random().toString(16).slice(2)));
+      const entry = { id: uuid, name: currentName(), value: n, timeISO: new Date().toISOString() };
       history.unshift(entry);
       // keep last 100
       history = history.slice(0,100);
@@ -198,7 +199,8 @@
     }
 
     function escapeHtml(s){
-      return s.replace(/[&<>"]g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    }[c]));
     }
 
     // Event listeners
